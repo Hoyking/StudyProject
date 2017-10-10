@@ -1,4 +1,4 @@
-package lesson1.practice;
+package lesson1.practice.car;
 
 public class Sedan extends SoftCar {
 
