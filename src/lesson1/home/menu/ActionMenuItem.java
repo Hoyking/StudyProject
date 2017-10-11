@@ -2,13 +2,13 @@ package lesson1.home.menu;
 
 import lesson1.home.action.ActionPerformer;
 
-public class FinalMenuItem extends MenuItem {
+public class ActionMenuItem extends MenuItem {
 
     private ActionPerformer performer;
 
-    public FinalMenuItem() {}
+    public ActionMenuItem() {}
 
-    public FinalMenuItem(String name, MenuItem[] childMenu, ActionPerformer performer) {
+    public ActionMenuItem(String name, MenuItem[] childMenu, ActionPerformer performer) {
         super(name, childMenu);
         this.performer = performer;
     }

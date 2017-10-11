@@ -4,7 +4,7 @@ import lesson1.home.action.*;
 import lesson1.home.data.NumbersArraySingleton;
 import lesson1.home.exception.NotUniqueValueException;
 import lesson1.home.menu.CompositeMenuItem;
-import lesson1.home.menu.FinalMenuItem;
+import lesson1.home.menu.ActionMenuItem;
 import lesson1.home.menu.MenuItem;
 
 import java.util.InputMismatchException;
@@ -39,6 +39,8 @@ public class MenuStarter {
                 String inputLine = scanner.nextLine();
                 if(inputLine.length() != 1 || inputLine.charAt(0) != inputFinishChar) {
                     printWrongValueErrorMessage();
+                } else if (NumbersArraySingleton.getInstance().getSize() == 0){
+                    printEmptyArrayErrorMessage();
                 } else {
                     printSeparator();
                     break;
@@ -67,6 +69,12 @@ public class MenuStarter {
         System.out.println();
     }
 
+    private void printEmptyArrayErrorMessage() {
+        System.out.println();
+        System.out.println("Введите хотя бы одно значение.");
+        System.out.println();
+    }
+
     private void printSeparator() {
         System.out.println();
         System.out.println("--------------------");
@@ -80,34 +88,34 @@ public class MenuStarter {
         MenuItem[] thirdLevelMenu1 = new MenuItem[6];
         MenuItem[] thirdLevelMenu2 = new MenuItem[3];
 
-        thirdLevelMenu1[0] = new FinalMenuItem("Найти максимум", thirdLevelMenu1, new MaxValueAction());
-        thirdLevelMenu1[1] = new FinalMenuItem("Найти минимум", thirdLevelMenu1, new MinValueAction());
-        thirdLevelMenu1[2] = new FinalMenuItem("Найти количество", thirdLevelMenu1, new ArrayLengthAction());
-        thirdLevelMenu1[3] = new FinalMenuItem("Найти сумму", thirdLevelMenu1, new SumAction());
-        thirdLevelMenu1[4] = new FinalMenuItem("Найти среднее значение", thirdLevelMenu1, new AverageValueAction());
+        thirdLevelMenu1[0] = new ActionMenuItem("Найти максимум", thirdLevelMenu1, new MaxValueAction());
+        thirdLevelMenu1[1] = new ActionMenuItem("Найти минимум", thirdLevelMenu1, new MinValueAction());
+        thirdLevelMenu1[2] = new ActionMenuItem("Найти количество", thirdLevelMenu1, new ArrayLengthAction());
+        thirdLevelMenu1[3] = new ActionMenuItem("Найти сумму", thirdLevelMenu1, new SumAction());
+        thirdLevelMenu1[4] = new ActionMenuItem("Найти среднее значение", thirdLevelMenu1, new AverageValueAction());
         thirdLevelMenu1[5] = new CompositeMenuItem("Назад", secondLevelMenu1);
 
-        thirdLevelMenu2[0] = new FinalMenuItem("Проверить, входит ли число в массив", thirdLevelMenu2,
+        thirdLevelMenu2[0] = new ActionMenuItem("Проверить, входит ли число в массив", thirdLevelMenu2,
                 new ElemContainingAction());
-        thirdLevelMenu2[1] = new FinalMenuItem("Заменить элемент массива на другой", thirdLevelMenu2,
-                new SwitchElemAction());
+        thirdLevelMenu2[1] = new ActionMenuItem("Заменить элемент массива на другой", thirdLevelMenu2,
+                new ReplaceElemAction());
         thirdLevelMenu2[2] = new CompositeMenuItem("Назад", secondLevelMenu1);
 
         secondLevelMenu1[0] = new CompositeMenuItem("Вычисления значений", thirdLevelMenu1);
         secondLevelMenu1[1] = new CompositeMenuItem("Поиск", thirdLevelMenu2);
         secondLevelMenu1[2] = new CompositeMenuItem("Назад", firstLevelMenu);
 
-        secondLevelMenu2[0] = new FinalMenuItem("Печать массива в прямом порядке", secondLevelMenu2,
+        secondLevelMenu2[0] = new ActionMenuItem("Печать массива в прямом порядке", secondLevelMenu2,
                 new DirectOrderPrintingAction());
-        secondLevelMenu2[1] = new FinalMenuItem("Печать массива в обратном порядке", secondLevelMenu2,
+        secondLevelMenu2[1] = new ActionMenuItem("Печать массива в обратном порядке", secondLevelMenu2,
                 new ReverseOrderPrintingAction());
-        secondLevelMenu2[2] = new FinalMenuItem("Печать массива в отсортированном порядке", secondLevelMenu2,
+        secondLevelMenu2[2] = new ActionMenuItem("Печать массива в отсортированном порядке", secondLevelMenu2,
                 new SortedPrintingAction());
         secondLevelMenu2[3] = new CompositeMenuItem("Назад", firstLevelMenu);
 
         firstLevelMenu[0] = new CompositeMenuItem("Операции", secondLevelMenu1);
         firstLevelMenu[1] = new CompositeMenuItem("Печать", secondLevelMenu2);
-        firstLevelMenu[2] = new FinalMenuItem("Выход", firstLevelMenu, new ExitAction());
+        firstLevelMenu[2] = new ActionMenuItem("Выход", firstLevelMenu, new ExitAction());
 
         CompositeMenuItem menu = new CompositeMenuItem("Меню", firstLevelMenu);
         menu.performMenuAction();

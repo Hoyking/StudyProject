@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class SwitchElemAction implements ActionPerformer {
+public class ReplaceElemAction implements ActionPerformer {
 
     @Override
     public void performAction() {
@@ -40,6 +40,11 @@ public class SwitchElemAction implements ActionPerformer {
             return;
         }
 
+        if(!numArray.checkForUniqueness(value2)) {
+            duplicateValueErrorMessage();
+            return;
+        }
+
         numArray.setValueAt(index, value2);
         successMessage();
         printSeparator();
@@ -52,6 +57,11 @@ public class SwitchElemAction implements ActionPerformer {
 
     private void noSuchElemErrorMessage() {
         System.out.println("Данное число не входит в массив.");
+        System.out.println();
+    }
+
+    private void duplicateValueErrorMessage() {
+        System.out.println("Данное число уже присутствует в массиве.");
         System.out.println();
     }
 
