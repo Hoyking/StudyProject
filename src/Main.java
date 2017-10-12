@@ -1,4 +1,4 @@
-import lesson1.home.MenuStarter;
+import lesson1.home.menu.MenuStarter;
 
 public class Main {
 

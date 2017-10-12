@@ -1,4 +1,4 @@
-package lesson1.home.menu;
+package lesson1.home.menu.item;
 
 public class CompositeMenuItem extends MenuItem {
 

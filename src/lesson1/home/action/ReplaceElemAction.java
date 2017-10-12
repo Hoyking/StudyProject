@@ -1,6 +1,7 @@
 package lesson1.home.action;
 
 import lesson1.home.data.NumbersArraySingleton;
+import lesson1.home.scanner.InputScannerSingleton;
 
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
@@ -11,12 +12,11 @@ public class ReplaceElemAction implements ActionPerformer {
     @Override
     public void performAction() {
         NumbersArraySingleton numArray = NumbersArraySingleton.getInstance();
-        Scanner scanner = new Scanner(System.in);
 
         System.out.print("Введите заменяемое число: ");
         int value1;
         try {
-            value1 = scanner.nextInt();
+            value1 = InputScannerSingleton.getInstance().getScanner().nextInt();
         } catch (InputMismatchException e) {
             wrongValueErrorMessage();
             return;
@@ -30,11 +30,10 @@ public class ReplaceElemAction implements ActionPerformer {
             return;
         }
 
-
         System.out.print("Введите новое число: ");
         int value2;
         try {
-            value2 = scanner.nextInt();
+            value2 = InputScannerSingleton.getInstance().getScanner().nextInt();
         } catch (InputMismatchException e) {
             wrongValueErrorMessage();
             return;

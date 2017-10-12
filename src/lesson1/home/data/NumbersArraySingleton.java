@@ -9,7 +9,7 @@ public class NumbersArraySingleton {
 
     private int[] array;
     private int lastArrayIndex;
-    private static NumbersArraySingleton instance;
+    private volatile static NumbersArraySingleton instance;
 
     static {
         instance = new NumbersArraySingleton();

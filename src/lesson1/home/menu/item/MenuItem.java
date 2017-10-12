@@ -1,7 +1,8 @@
-package lesson1.home.menu;
+package lesson1.home.menu.item;
+
+import lesson1.home.scanner.InputScannerSingleton;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public abstract class MenuItem {
 
@@ -27,11 +28,10 @@ public abstract class MenuItem {
 
     protected void chooseVariant() {
         System.out.print("Введите значение: ");
-        Scanner scanner = new Scanner(System.in);
         int value = 0;
 
         try {
-            value = scanner.nextInt();
+            value = InputScannerSingleton.getInstance().getScanner().nextInt();
             System.out.println();
         } catch (InputMismatchException e) {
             errorMessage();
