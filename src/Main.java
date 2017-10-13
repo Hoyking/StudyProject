@@ -1,9 +1,9 @@
-import lesson1.home.menu.MenuStarter;
+import lesson2.practice.TestCollectionMainClass;
 
 public class Main {
 
     public static void main(String[] args) {
-        new MenuStarter();
+        new TestCollectionMainClass().main();
     }
 
 }
