@@ -11,14 +11,14 @@ public class StringMapTest implements Testable {
             new Car(2, "Toyota", 1.8, 240),
             new Car(3, "Audi", 1.7, 280)};
 
-    private Map<Car, Integer> map;
+    private Map<String, Car> map;
 
     public StringMapTest() {
-        map = new HashMap<Car, Integer>();
+        map = new HashMap<>();
     }
 
-    public StringMapTest(Comparator<Car> comparator) {
-        map = new TreeMap<Car, Integer>(comparator);
+    public StringMapTest(Comparator<String> comparator) {
+        map = new TreeMap<>(comparator);
     }
 
     @Override
@@ -29,13 +29,13 @@ public class StringMapTest implements Testable {
 
     private void putValueToMap(Car[] array) {
         for(Car item: array) {
-            map.put(item, new Random().nextInt(10) + 1);
+            map.put(item.getName(), item);
         }
     }
 
-    private void printMapEntries(Map<Car, Integer> map) {
-        for(Map.Entry<Car, Integer> entry: map.entrySet()) {
-            System.out.println("Item: " + entry.getKey().toString() + ", number: " + entry.getValue());
+    private void printMapEntries(Map<String, Car> map) {
+        for(Map.Entry<String, Car> entry: map.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", value: " + entry.getValue().toString());
         }
         System.out.println("Array length: " + array.length);
         System.out.println("Map size: " + map.size());
