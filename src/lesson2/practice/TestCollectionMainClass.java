@@ -6,8 +6,6 @@ import lesson2.practice.string.StringMapTest;
 import lesson2.practice.string.StringSetTest;
 import lesson2.practice.string.Testable;
 
-import java.util.function.Function;
-
 public class TestCollectionMainClass {
 
     public void runTest() {
