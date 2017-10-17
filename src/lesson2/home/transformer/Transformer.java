@@ -3,6 +3,7 @@ package lesson2.home.transformer;
 import lesson2.practice.object.Car;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Transformer {
@@ -11,8 +12,7 @@ public class Transformer {
 
     public static List<Car> arrayListTransformer(Car[] cars) {
         List<Car> carList = new ArrayList<>(cars.length);
-        for(Car car: cars)
-            carList.add(car);
+        carList.addAll(Arrays.asList(cars));
         return carList;
     }
 

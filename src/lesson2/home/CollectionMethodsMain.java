@@ -13,11 +13,14 @@ public class CollectionMethodsMain {
             new Car(2, "Toyota", 1.8, 240),
             new Car(2, "Toyota", 1.8, 240),
             new Car(3, "Audi", 1.7, 280),
-            new Car(4, "lamborghini", 1.4, 350)};
+            new Car(4, "Lamborghini", 1.4, 350)};
 
     public void test() {
         Result result = new Result(Transformer.arrayListTransformer(cars), new CollectionMethods());
-        result.overSpeedBelowWeightPattern(300, 1.4);
+        //result.overSpeedBelowWeightPattern(300, 1.4);
+        //result.charEntry('r');
+        //result.carNameConversion();
+        result.doubleSort();
     }
 
 }

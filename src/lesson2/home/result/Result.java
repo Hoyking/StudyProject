@@ -5,6 +5,7 @@ import lesson2.practice.object.Car;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class Result {
 
@@ -83,10 +84,27 @@ public class Result {
     public void overSpeedBelowWeightPattern(int speed, double weight) {
         List<Car> cars = methods.overSpeedBelowWeightPattern(collection, speed, weight);
         System.out.println("Cars with speed over " + speed + " and weight below " + weight + ":");
-        for(Car car: cars) {
-            System.out.println(car.toString());
+        cars.forEach(car -> System.out.println(car.toString()));
+        System.out.println();
+    }
+
+    public void charEntry(char c) {
+        System.out.println("Entry of the character '" + c + "' in car names:");
+        for(Map.Entry<String, Boolean> entry : methods.charEntry(collection, c).entrySet()) {
+            System.out.println("Car name: " + entry.getKey() + ", character entry: " + entry.getValue());
         }
         System.out.println();
+    }
+
+    public void carNameConversion() {
+        methods.carNameConversion(collection);
+        System.out.println("Collection after car names conversion:");
+        collection.forEach(car -> System.out.println(car.toString()));
+        System.out.println();
+    }
+
+    public void doubleSort() {
+        methods.doubleSort(collection);
     }
 
 }

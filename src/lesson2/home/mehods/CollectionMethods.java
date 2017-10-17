@@ -83,4 +83,37 @@ public class CollectionMethods implements Methods {
         return patternCars;
     }
 
+    @Override
+    public Map<String, Boolean> charEntry(Collection<Car> collection, char c) {
+        Map<String, Boolean> charEntryMap = new HashMap<>();
+        for(Car car : collection) {
+            String name = car.getName().toLowerCase();
+            if(name.indexOf(c) == -1)
+                charEntryMap.put(name, false);
+            else
+                charEntryMap.put(name, true);
+        }
+        return charEntryMap;
+    }
+
+    @Override
+    public void carNameConversion(Collection<Car> collection) {
+        for(Car car : collection) {
+            car.setName(car.getName() + "_1");
+        }
+    }
+
+    @Override
+    public void doubleSort(Collection<Car> collection) {
+        List list = new ArrayList(collection);
+        list.sort(Comparator.comparingInt(Car::getSpeed));
+        System.out.println("Car collection sorted by speed: ");
+        list.forEach(car -> System.out.println(car.toString()));
+        System.out.println();
+        list.sort(Comparator.comparing(car -> ((Car)car).getName()));
+        System.out.println(" Car collection sorted by name: ");
+        list.forEach(car -> System.out.println(" " + car.toString()));
+        System.out.println();
+    }
+
 }
