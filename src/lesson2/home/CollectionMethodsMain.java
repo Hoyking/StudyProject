@@ -17,7 +17,7 @@ public class CollectionMethodsMain {
 
     public void test() {
         Result result = new Result(Transformer.arrayListTransformer(cars), new CollectionMethods());
-        result.deleteUnderSpeed(250);
+        result.overSpeedBelowWeightPattern(300, 1.4);
     }
 
 }
