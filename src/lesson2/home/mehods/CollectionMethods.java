@@ -62,20 +62,20 @@ public class CollectionMethods implements Methods {
     public Car[] secondAndThirdCars(Collection<Car> collection) {
         Iterator<Car> iterator = collection.iterator();
         Car secondCar = null;
-        Car thirdCar = null;
+        Car thirdCar;
         try {
             iterator.next();
             secondCar = iterator.next();
             thirdCar = iterator.next();
         } catch (NoSuchElementException e) {
-            return new Car[]{secondCar, thirdCar};
+            return new Car[]{secondCar, null};
         }
         return new Car[]{secondCar, thirdCar};
     }
 
     @Override
     public List<Car> overSpeedBelowWeightPattern(Collection<Car> collection, int speed, double weight) {
-        List<Car> patternCars = new ArrayList<Car>();
+        List<Car> patternCars = new ArrayList<>();
         for (Car car : collection) {
             if (car.getSpeed() > speed && car.getWeight() < weight)
                 patternCars.add(car);

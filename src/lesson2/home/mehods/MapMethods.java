@@ -62,7 +62,7 @@ public class MapMethods implements AbstractMapMethods {
     public Set<Map.Entry<String, Car>> secondAndThirdCars(Map<String, Car> map) {
         Iterator<Map.Entry<String, Car>> iterator = map.entrySet().iterator();
         Map.Entry<String, Car> secondEntry = null;
-        Map.Entry<String, Car> thirdEntry = null;
+        Map.Entry<String, Car> thirdEntry;
         Set<Map.Entry<String, Car>> set = new HashSet<>(2);
         try {
             iterator.next();
@@ -70,7 +70,7 @@ public class MapMethods implements AbstractMapMethods {
             thirdEntry = iterator.next();
         } catch (NoSuchElementException e) {
             set.add(secondEntry);
-            set.add(thirdEntry);
+            set.add(null);
             return set;
         }
         set.add(secondEntry);
