@@ -29,4 +29,5 @@ public interface Methods {
     void carNameConversion(Collection<Car> collection);
 
     void doubleSort(Collection<Car> collection);
+
 }

@@ -17,36 +17,33 @@ public class Result {
         this.methods = methods;
     }
 
-    public Collection<Car> getCollection() {
-        return collection;
+    private void printCollection() {
+        collection.forEach(car -> System.out.println(car.toString()));
+        System.out.println();
     }
-
+    
     public void deleteByMaxSpeed() {
         methods.deleteByMaxSpeed(collection);
         System.out.println("Collection after deleting cars with max speed:");
-        collection.forEach(car -> System.out.println(car.toString()));
-        System.out.println();
+        printCollection();
     }
 
     public void deleteByMinSpeed() {
         methods.deleteByMinSpeed(collection);
         System.out.println("Collection after deleting cars with min speed:");
-        collection.forEach(car -> System.out.println(car.toString()));
-        System.out.println();
+        printCollection();
     }
 
     public void deleteBelowSpeed(int speed) {
         methods.deleteBelowSpeed(collection, speed);
         System.out.println("Collection after deleting cars with speed below " + speed + ":");
-        collection.forEach(car -> System.out.println(car.toString()));
-        System.out.println();
+        printCollection();
     }
 
     public void deleteOverSpeed(int speed) {
         methods.deleteOverSpeed(collection, speed);
         System.out.println("Collection after deleting cars with speed over " + speed + ":");
-        collection.forEach(car -> System.out.println(car.toString()));
-        System.out.println();
+        printCollection();
     }
 
     public void totalSpeed() {
@@ -67,18 +64,14 @@ public class Result {
     public void secondAndThirdCars() {
         Car[] cars = methods.secondAndThirdCars(collection);
         System.out.println("Second and third elements of collection: ");
-        try {
-            System.out.println(cars[0].toString());
-        } catch (NullPointerException e) {
-            System.out.println("null, null");
-            System.out.println();
+        for(Car car : cars) {
+            try {
+                System.out.println(car.toString());
+            } catch(NullPointerException e) {
+                System.out.println("null");
+            }
         }
-        try {
-            System.out.println(cars[1].toString());
-        } catch (NullPointerException e) {
-            System.out.println("null");
-            System.out.println();
-        }
+        System.out.println();
     }
 
     public void overSpeedBelowWeightPattern(int speed, double weight) {
@@ -99,8 +92,7 @@ public class Result {
     public void carNameConversion() {
         methods.carNameConversion(collection);
         System.out.println("Collection after car names conversion:");
-        collection.forEach(car -> System.out.println(car.toString()));
-        System.out.println();
+        printCollection();
     }
 
     public void doubleSort() {

@@ -2,9 +2,7 @@ package lesson2.home.transformer;
 
 import lesson2.practice.object.Car;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Transformer {
 
@@ -14,6 +12,14 @@ public class Transformer {
         List<Car> carList = new ArrayList<>(cars.length);
         carList.addAll(Arrays.asList(cars));
         return carList;
+    }
+
+    public static Map<String, Car> hashMapTransformer(Car[] cars) {
+        Map<String, Car> map = new HashMap<>(cars.length);
+        for(Car car : cars) {
+            map.put(car.getName(), car);
+        }
+        return map;
     }
 
 }

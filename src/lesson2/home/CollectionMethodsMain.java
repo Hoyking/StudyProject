@@ -1,11 +1,10 @@
 package lesson2.home;
 
-import lesson2.home.mehods.CollectionMethods;
+import lesson2.home.mehods.MapMethods;
+import lesson2.home.result.MapResult;
 import lesson2.home.result.Result;
 import lesson2.home.transformer.Transformer;
 import lesson2.practice.object.Car;
-
-import java.util.ArrayList;
 
 public class CollectionMethodsMain {
 
@@ -16,11 +15,31 @@ public class CollectionMethodsMain {
             new Car(4, "Lamborghini", 1.4, 350)};
 
     public void test() {
-        Result result = new Result(Transformer.arrayListTransformer(cars), new CollectionMethods());
-        //result.overSpeedBelowWeightPattern(300, 1.4);
-        //result.charEntry('r');
-        //result.carNameConversion();
-        result.doubleSort();
+        /*Result listResult = new Result(Transformer.arrayListTransformer(cars), new CollectionMethods());
+        //listResult.deleteByMaxSpeed();
+        //listResult.deleteByMinSpeed();
+        //listResult.deleteBelowSpeed(290);
+        //listResult.deleteOverSpeed(290);
+        //listResult.totalSpeed();
+        //listResult.getThirdCar();
+        //listResult.secondAndThirdCars();
+        //listResult.overSpeedBelowWeightPattern(300, 1.4);
+        //listResult.charEntry('r');
+        //listResult.carNameConversion();
+        listResult.doubleSort();*/
+
+        MapResult mapResult = new MapResult(Transformer.hashMapTransformer(cars), new MapMethods());
+        //mapResult.deleteByMaxSpeed();
+        //mapResult.deleteByMinSpeed();
+        //mapResult.deleteBelowSpeed(290);
+        //mapResult.deleteOverSpeed(290);
+        //mapResult.totalSpeed();
+        //mapResult.getThirdCar();
+        //mapResult.secondAndThirdCars();
+        //mapResult.overSpeedBelowWeightPattern(300, 1.5);
+        //mapResult.charEntry('r');
+        //mapResult.carNameConversion();
+        mapResult.doubleSort();
     }
 
 }
