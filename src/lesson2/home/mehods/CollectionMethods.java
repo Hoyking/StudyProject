@@ -107,12 +107,12 @@ public class CollectionMethods implements Methods {
     public void doubleSort(Collection<Car> collection) {
         List list = new ArrayList(collection);
         list.sort(Comparator.comparingInt(Car::getSpeed));
-        System.out.println("Car collection sorted by speed: ");
+        System.out.println("(First testing) Car collection sorted by speed: ");
         list.forEach(car -> System.out.println(car.toString()));
         System.out.println();
         list.sort(Comparator.comparing(car -> ((Car)car).getName()));
-        System.out.println(" Car collection sorted by name: ");
-        list.forEach(car -> System.out.println(" " + car.toString()));
+        System.out.println("(Second testing) Car collection sorted by car names: ");
+        list.forEach(car -> System.out.println(car.toString()));
         System.out.println();
     }
 

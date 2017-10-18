@@ -30,4 +30,11 @@ public interface Methods {
 
     void doubleSort(Collection<Car> collection);
 
+    default void reestablishCarNames(Car[] cars) {
+        for(Car car : cars) {
+            if(car.getName().contains("_1"))
+                car.setName(car.getName().substring(0, car.getName().length() - 2));
+        }
+    }
+
 }

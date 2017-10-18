@@ -45,8 +45,6 @@ public class MapStreamMethods implements AbstractMapMethods {
 
     @Override
     public List<Map.Entry<String, Car>> secondAndThirdCars(Map<String, Car> map) {
-        Map.Entry<String, Car> secondEntry = null;
-        Map.Entry<String, Car> thirdEntry;
         List<Map.Entry<String, Car>> list = new ArrayList<>(2);
 
         try {

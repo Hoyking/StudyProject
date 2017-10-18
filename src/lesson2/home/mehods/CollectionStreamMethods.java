@@ -84,12 +84,12 @@ public class CollectionStreamMethods implements Methods {
     @Override
     public void doubleSort(Collection<Car> collection) {
         List<Car> sortedList = collection.stream().sorted(Comparator.comparingInt(Car::getSpeed)).collect(Collectors.toList());
-        System.out.println("Car collection sorted by speed: ");
+        System.out.println("(First testing) Car collection sorted by speed: ");
         sortedList.forEach(car -> System.out.println(car.toString()));
         System.out.println();
 
         sortedList = collection.stream().sorted(Comparator.comparing(Car::getName)).collect(Collectors.toList());
-        System.out.println(" Car collection sorted by name: ");
+        System.out.println("(Second testing) Car collection sorted by car names: ");
         sortedList.forEach(car -> System.out.println(" " + car.toString()));
         System.out.println();
     }

@@ -24,13 +24,13 @@ public class MapResult {
 
     public void deleteByMaxSpeed() {
         mapMethods.deleteByMaxSpeed(map);
-        System.out.println("Collection after deleting cars with max speed:");
+        System.out.println("Map after deleting cars with max speed:");
         printMap();
     }
 
     public void deleteByMinSpeed() {
         mapMethods.deleteByMinSpeed(map);
-        System.out.println("Collection after deleting cars with min speed:");
+        System.out.println("Map after deleting cars with min speed:");
         printMap();
     }
 
@@ -64,7 +64,7 @@ public class MapResult {
 
     public void secondAndThirdCars() {
         List<Map.Entry<String, Car>> entries = mapMethods.secondAndThirdCars(map);
-        System.out.println("Second and third elements of collection: ");
+        System.out.println("Second and third elements of map: ");
         for(Map.Entry<String, Car> entry : entries) {
             try {
                 System.out.println("Key: " + entry.getKey() + ", value: " + entry.getValue());
@@ -92,7 +92,7 @@ public class MapResult {
 
     public void carNameConversion() {
         mapMethods.carNameConversion(map);
-        System.out.println("Collection after car names conversion:");
+        System.out.println("Map after car names conversion:");
         printMap();
     }
 

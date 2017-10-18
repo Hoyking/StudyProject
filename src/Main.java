@@ -1,10 +1,9 @@
-import lesson2.home.CollectionMethodsMain;
-import lesson2.practice.TestCollectionMainClass;
+import lesson2.home.MethodsTester;
 
 public class Main {
 
     public static void main(String[] args) {
-        new CollectionMethodsMain().test();
+        new MethodsTester().startTest();
     }
 
 }
