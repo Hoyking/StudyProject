@@ -59,23 +59,23 @@ public class MapMethods implements AbstractMapMethods {
     }
 
     @Override
-    public Set<Map.Entry<String, Car>> secondAndThirdCars(Map<String, Car> map) {
+    public List<Map.Entry<String, Car>> secondAndThirdCars(Map<String, Car> map) {
         Iterator<Map.Entry<String, Car>> iterator = map.entrySet().iterator();
         Map.Entry<String, Car> secondEntry = null;
         Map.Entry<String, Car> thirdEntry;
-        Set<Map.Entry<String, Car>> set = new HashSet<>(2);
+        List<Map.Entry<String, Car>> list = new ArrayList<>(2);
         try {
             iterator.next();
             secondEntry = iterator.next();
             thirdEntry = iterator.next();
         } catch (NoSuchElementException e) {
-            set.add(secondEntry);
-            set.add(null);
-            return set;
+            list.add(secondEntry);
+            list.add(null);
+            return list;
         }
-        set.add(secondEntry);
-        set.add(thirdEntry);
-        return set;
+        list.add(secondEntry);
+        list.add(thirdEntry);
+        return list;
     }
 
     @Override
@@ -115,14 +115,16 @@ public class MapMethods implements AbstractMapMethods {
         for(Car car : list) {
             speedSortedMap.put(car.getName(), car);
         }
-        System.out.println("Car map sorted by speed: ");
-        speedSortedMap.forEach((key, value) -> System.out.println("Key: " + key + ", value: " + value.toString()));
-        System.out.println();
+        printMap(speedSortedMap, "(First sorting) Car map sorted by speed:");
 
         Map<String, Car> nameSortedMap = new TreeMap<>(String::compareTo);
         nameSortedMap.putAll(map);
-        System.out.println(" Car map sorted by car names: ");
-        nameSortedMap.forEach((key, value) -> System.out.println(" Key: " + key + ", value: " + value.toString()));
+        printMap(nameSortedMap, "(Second sorting) Car map sorted by car names:");
+    }
+
+    private void printMap(Map<String, Car> map, String message) {
+        System.out.println(message);
+        map.forEach((key, value) -> System.out.println(" Key: " + key + ", value: " + value.toString()));
         System.out.println();
     }
 

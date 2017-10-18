@@ -2,6 +2,7 @@ package lesson2.home.mehods;
 
 import lesson2.practice.object.Car;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public interface AbstractMapMethods {
 
     Map.Entry<String, Car> getThirdCar(Map<String, Car> map);
 
-    Set<Map.Entry<String, Car>> secondAndThirdCars(Map<String, Car> map);
+    List<Map.Entry<String, Car>> secondAndThirdCars(Map<String, Car> map);
 
     Set<Map.Entry<String, Car>> overSpeedBelowWeightPattern(Map<String, Car> map, int speed, double weight);
 

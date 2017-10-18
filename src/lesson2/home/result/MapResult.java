@@ -63,7 +63,7 @@ public class MapResult {
     }
 
     public void secondAndThirdCars() {
-        Set<Map.Entry<String, Car>> entries = mapMethods.secondAndThirdCars(map);
+        List<Map.Entry<String, Car>> entries = mapMethods.secondAndThirdCars(map);
         System.out.println("Second and third elements of collection: ");
         for(Map.Entry<String, Car> entry : entries) {
             try {
@@ -72,8 +72,6 @@ public class MapResult {
                 System.out.println("null");
             }
         }
-        if(entries.size() == 1)
-            System.out.println("null");
         System.out.println();
     }
 

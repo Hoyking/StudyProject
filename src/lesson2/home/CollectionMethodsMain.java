@@ -3,6 +3,7 @@ package lesson2.home;
 import lesson2.home.mehods.CollectionMethods;
 import lesson2.home.mehods.CollectionStreamMethods;
 import lesson2.home.mehods.MapMethods;
+import lesson2.home.mehods.MapStreamMethods;
 import lesson2.home.result.MapResult;
 import lesson2.home.result.Result;
 import lesson2.home.transformer.Transformer;
@@ -28,9 +29,9 @@ public class CollectionMethodsMain {
         //listResult.overSpeedBelowWeightPattern(300, 1.5);
         //listResult.charEntry('a');
         //listResult.carNameConversion();
-        listResult.doubleSort();
+        //listResult.doubleSort();
 
-        //MapResult mapResult = new MapResult(Transformer.hashMapTransformer(cars), new MapMethods());
+        MapResult mapResult = new MapResult(Transformer.hashMapTransformer(cars), new MapStreamMethods());
         //mapResult.deleteByMaxSpeed();
         //mapResult.deleteByMinSpeed();
         //mapResult.deleteBelowSpeed(290);
@@ -41,7 +42,7 @@ public class CollectionMethodsMain {
         //mapResult.overSpeedBelowWeightPattern(300, 1.5);
         //mapResult.charEntry('r');
         //mapResult.carNameConversion();
-        //mapResult.doubleSort();
+        mapResult.doubleSort();
     }
 
 }
