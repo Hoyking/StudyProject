@@ -36,41 +36,36 @@ public class CollectionStreamMethods implements Methods {
 
     @Override
     public Car getThirdCar(Collection<Car> collection) {
-        try {
-            return collection.stream().skip(2).collect(Collectors.toList()).get(0);
-        } catch (IndexOutOfBoundsException e) {
-            return null;
-        }
+        return collection.stream()
+                .skip(2)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public Car[] secondAndThirdCars(Collection<Car> collection) {
-        Car secondCar;
-        Car thirdCar;
-
-        try {
-            secondCar = collection.stream().skip(1).collect(Collectors.toList()).get(0);
-        } catch(IndexOutOfBoundsException e) {
-            return new Car[] {null, null};
-        }
-
-        try {
-            thirdCar = collection.stream().skip(2).collect(Collectors.toList()).get(0);
-        } catch(IndexOutOfBoundsException e) {
-            return new Car[] {secondCar, null};
-        }
-
-        return new Car[] {secondCar, thirdCar};
+        return new Car[] {
+                collection.stream()
+                        .skip(1)
+                        .findFirst()
+                        .orElse(null),
+                collection.stream()
+                        .skip(2)
+                        .findFirst()
+                        .orElse(null)
+        };
     }
 
     @Override
     public List<Car> overSpeedBelowWeightPattern(Collection<Car> collection, int speed, double weight) {
-        return collection.stream().filter(car -> car.getSpeed() > speed && car.getWeight() < weight).collect(Collectors.toList());
+        return collection.stream().filter(car -> car.getSpeed() > speed && car.getWeight() < weight).
+                collect(Collectors.toList());
     }
 
     @Override
     public Map<String, Boolean> charEntry(Collection<Car> collection, char c) {
-        List<Car> trueList = collection.stream().filter(car -> car.getName().toLowerCase().indexOf(c) != -1).collect(Collectors.toList());
+        List<Car> trueList = collection.stream().filter(car -> car.getName().toLowerCase().indexOf(c) != -1).
+                collect(Collectors.toList());
         Map<String, Boolean> map = new HashMap<>();
         collection.forEach(car -> map.put(car.getName(), trueList.contains(car)));
         return map;
@@ -83,7 +78,8 @@ public class CollectionStreamMethods implements Methods {
 
     @Override
     public void doubleSort(Collection<Car> collection) {
-        List<Car> sortedList = collection.stream().sorted(Comparator.comparingInt(Car::getSpeed)).collect(Collectors.toList());
+        List<Car> sortedList = collection.stream().sorted(Comparator.comparingInt(Car::getSpeed)).
+                collect(Collectors.toList());
         System.out.println("(First testing) Car collection sorted by speed: ");
         sortedList.forEach(car -> System.out.println(car.toString()));
         System.out.println();

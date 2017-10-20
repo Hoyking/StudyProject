@@ -36,30 +36,24 @@ public class MapStreamMethods implements AbstractMapMethods {
 
     @Override
     public Map.Entry<String, Car> getThirdCar(Map<String, Car> map) {
-        try {
-            return map.entrySet().stream().skip(2).collect(Collectors.toList()).get(0);
-        } catch (IndexOutOfBoundsException e) {
-            return null;
-        }
+        return map.entrySet().stream()
+                .skip(2)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public List<Map.Entry<String, Car>> secondAndThirdCars(Map<String, Car> map) {
-        List<Map.Entry<String, Car>> list = new ArrayList<>(2);
-
-        try {
-            list.add(map.entrySet().stream().skip(1).collect(Collectors.toList()).get(0));
-        } catch(IndexOutOfBoundsException e) {
-            list.add(null);
-        }
-
-        try {
-            list.add(map.entrySet().stream().skip(2).collect(Collectors.toList()).get(0));
-        } catch(IndexOutOfBoundsException e) {
-            list.add(null);
-        }
-
-        return list;
+        List<Map.Entry<String, Car>> entryList = new ArrayList<>();
+        entryList.add(map.entrySet().stream().
+                skip(1).
+                findFirst().
+                orElse(null));
+        entryList.add(map.entrySet().stream().
+                skip(2).
+                findFirst().
+                orElse(null));
+        return entryList;
     }
 
     @Override
