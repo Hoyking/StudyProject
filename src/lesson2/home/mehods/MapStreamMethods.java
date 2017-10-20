@@ -44,7 +44,7 @@ public class MapStreamMethods implements AbstractMapMethods {
 
     @Override
     public List<Map.Entry<String, Car>> secondAndThirdCars(Map<String, Car> map) {
-        List<Map.Entry<String, Car>> entryList = new ArrayList<>();
+        List<Map.Entry<String, Car>> entryList = new ArrayList<>(2);
         entryList.add(map.entrySet().stream().
                 skip(1).
                 findFirst().
