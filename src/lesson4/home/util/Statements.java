@@ -121,4 +121,17 @@ public class Statements {
         return preparedStatement;
     }
 
+    public static PreparedStatement createReviewLinksStatement(Connection connection, String sql, long reviewId) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, reviewId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
+    }
+
+
+
 }

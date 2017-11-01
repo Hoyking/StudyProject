@@ -67,11 +67,11 @@ public class Review {
         return reviewTags;
     }
 
-    public void addNewsTag(ReviewTag reviewTag) {
+    public void addReviewTag(ReviewTag reviewTag) {
         reviewTags.add(reviewTag);
     }
 
-    public void removeNewsTag(ReviewTag reviewTag) {
+    public void removeReviewTag(ReviewTag reviewTag) {
         reviewTags.add(reviewTag);
     }
 

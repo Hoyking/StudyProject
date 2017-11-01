@@ -14,6 +14,8 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
 
     private final String GET_RUBRICS = "SELECT rubricName, subrubricName FROM rubrics";
     private final String GET_NEWS_RUBRICS = "SELECT newsRubric FROM news";
+    private final String GET_REVIEWS_ID = "SELECT id FROM reviews";
+    private final String GET_REVIEW_LINKS = "SELECT newsId FROM review_links WHERE reviewId = ?";
 
     private ConnectionDB connectionDB = ConnectionDB.getInstance();
 
@@ -29,7 +31,7 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
         ){
             map = new HashMap<>();
 
-            while(newsResultSet.next()) {
+            while (newsResultSet.next()) {
                 String rubricName = newsResultSet.getString(1);
                 if(map.containsKey(rubricName)) {
                     map.put(rubricName, map.get(rubricName) + 1);
@@ -38,7 +40,7 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
                 }
             }
 
-            while(subrubricsResultSet.next()) {
+            while (subrubricsResultSet.next()) {
                 String rubric = subrubricsResultSet.getString(1);
                 String subrubric = subrubricsResultSet.getString(2);
                 if(subrubric != null) {
@@ -53,7 +55,38 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
 
     @Override
     public int unlinkedReviewsNum() {
-        return 0;
+        int unlinkedReviewsNum = 0;
+        try (
+                Connection connection = connectionDB.getConnection();
+                Statement reviewsStatement = connection.createStatement();
+                ResultSet reviewsResultSet = reviewsStatement.executeQuery(GET_REVIEWS_ID)
+        ){
+            while (reviewsResultSet.next()) {
+                if(getLinksNumOfReview(reviewsResultSet.getLong(1)) == 0) {
+                    unlinkedReviewsNum++;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return unlinkedReviewsNum;
+    }
+
+    private int getLinksNumOfReview(long id) {
+        int num = 0;
+        try (
+                Connection connection = connectionDB.getConnection();
+                PreparedStatement reviewsStatement = Statements.createReviewLinksStatement(connection,
+                        GET_REVIEW_LINKS, id);
+                ResultSet reviewResultSet = reviewsStatement.executeQuery()
+        ){
+            while(reviewResultSet.next()) {
+                num++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return num;
     }
 
     @Override

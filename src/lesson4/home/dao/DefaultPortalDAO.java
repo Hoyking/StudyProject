@@ -20,7 +20,7 @@ public class DefaultPortalDAO implements PortalDAO {
     private final String ADD_AUTHOR = "INSERT INTO authors (id, name, surname) VALUES (?, ?, ?)";
     private final String ADD_NEWS_TAG = "INSERT INTO news_tags (newsId, tag) VALUES (?, ?)";
     private final String ADD_NEWS_LINK = "INSERT INTO news_links (newsId, reviewId) VALUES (?, ?)";
-    private final String ADD_REVIEW_TAG = "INSERT INTO review_tags (reviewId, tag) VALUES (?, ?)";
+    private final String ADD_REVIEW_TAG = "INSERT INTO reviews_tags (reviewId, tag) VALUES (?, ?)";
     private final String ADD_REVIEW_LINK = "INSERT INTO review_links (reviewId, newsId) VALUES (?, ?)";
 
     private ConnectionDB connectionDB = ConnectionDB.getInstance();
@@ -53,7 +53,6 @@ public class DefaultPortalDAO implements PortalDAO {
                         GET_RUBRIC, news.getRubric());
                 ResultSet rubricsResultSet = categoryPreparedStatement.executeQuery()
         ){
-            preparedStatement.executeUpdate();
             addNewsTags(news);
             addNewsLinks(news);
             if(!rubricsResultSet.next()) {
@@ -61,6 +60,7 @@ public class DefaultPortalDAO implements PortalDAO {
             } else {
                 refreshRubric(news.getRubric());
             }
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -108,12 +108,14 @@ public class DefaultPortalDAO implements PortalDAO {
                         GET_RUBRIC, review.getRubric());
                 ResultSet rubricsResultSet = categoryPreparedStatement.executeQuery()
         ){
-            preparedStatement.executeUpdate();
+            addReviewTags(review);
+            addReviewLinks(review);
             if(!rubricsResultSet.next()) {
                 addRubric(review.getRubric());
             } else {
                 refreshRubric(review.getRubric());
             }
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
