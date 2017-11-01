@@ -6,6 +6,7 @@ import lesson4.home.dao.PortalDAO;
 import lesson4.home.dao.PortalMethodsDAO;
 import lesson4.home.entity.*;
 
+import java.util.List;
 import java.util.Map;
 
 public class JDBCMain {
@@ -46,11 +47,16 @@ public class JDBCMain {
         //portalDAO.addReview(review2);
 
         //printMap(portalMethodsDAO.newsRubricsCapacity());
-        System.out.println("Number of unlinked reviews: " + portalMethodsDAO.unlinkedReviewsNum());
+        //System.out.println("Number of unlinked reviews: " + portalMethodsDAO.unlinkedReviewsNum());
+        printList(portalMethodsDAO.newsWithMoreThenTwoLinks());
     }
 
     private void printMap(Map<String, Integer> map) {
         map.forEach((key, value) -> System.out.println("Rubric: " + key + ", news number: " + value));
+    }
+
+    private void printList(List<String> list) {
+        list.forEach(item -> System.out.println("Item: " + item));
     }
 
 }

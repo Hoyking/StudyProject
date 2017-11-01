@@ -6,6 +6,7 @@ import lesson4.home.entity.ReviewTag;
 import lesson4.home.util.Statements;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
     private final String GET_NEWS_RUBRICS = "SELECT newsRubric FROM news";
     private final String GET_REVIEWS_ID = "SELECT id FROM reviews";
     private final String GET_REVIEW_LINKS = "SELECT newsId FROM review_links WHERE reviewId = ?";
+    private final String GET_NEWS_LINKS = "SELECT reviewId FROM news_links WHERE newsId = ?";
+    private final String GET_NEWS = "SELECT * FROM news";
 
     private ConnectionDB connectionDB = ConnectionDB.getInstance();
 
@@ -76,7 +79,7 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
         int num = 0;
         try (
                 Connection connection = connectionDB.getConnection();
-                PreparedStatement reviewsStatement = Statements.createReviewLinksStatement(connection,
+                PreparedStatement reviewsStatement = Statements.createLinksStatement(connection,
                         GET_REVIEW_LINKS, id);
                 ResultSet reviewResultSet = reviewsStatement.executeQuery()
         ){
@@ -91,7 +94,38 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
 
     @Override
     public List<String> newsWithMoreThenTwoLinks() {
-        return null;
+        List<String> headers = new ArrayList<>();
+        try (
+                Connection connection = connectionDB.getConnection();
+                Statement newsStatement = connection.createStatement();
+                ResultSet newsResultSet = newsStatement.executeQuery(GET_NEWS)
+        ){
+            while (newsResultSet.next()) {
+                if(getLinksNumOfNews(newsResultSet.getLong(1)) >= 2) {
+                    headers.add(newsResultSet.getString(2));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return headers;
+    }
+
+    private int getLinksNumOfNews(long id) {
+        int num = 0;
+        try (
+                Connection connection = connectionDB.getConnection();
+                PreparedStatement reviewsStatement = Statements.createLinksStatement(connection,
+                        GET_NEWS_LINKS, id);
+                ResultSet reviewResultSet = reviewsStatement.executeQuery()
+        ){
+            while(reviewResultSet.next()) {
+                num++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return num;
     }
 
     @Override

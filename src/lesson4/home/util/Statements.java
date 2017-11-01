@@ -121,7 +121,7 @@ public class Statements {
         return preparedStatement;
     }
 
-    public static PreparedStatement createReviewLinksStatement(Connection connection, String sql, long reviewId) {
+    public static PreparedStatement createLinksStatement(Connection connection, String sql, long reviewId) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -131,7 +131,5 @@ public class Statements {
         }
         return preparedStatement;
     }
-
-
 
 }
