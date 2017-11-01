@@ -1,10 +1,7 @@
 package lesson4.home.dao;
 
 import lesson4.home.connection.ConnectionDB;
-import lesson4.home.entity.Author;
-import lesson4.home.entity.News;
-import lesson4.home.entity.Review;
-import lesson4.home.entity.Rubric;
+import lesson4.home.entity.*;
 import lesson4.home.util.Statements;
 
 import java.sql.*;
@@ -13,16 +10,18 @@ import java.util.List;
 
 public class DefaultPortalDAO implements PortalDAO {
 
-    private int ADD = 0;
-    private int UPDATE = 1;
     private final String GET_NEWS = "SELECT * FROM news";
     private final String ADD_NEWS = "INSERT INTO news (id, name, content, newsRubric) VALUES (?, ?, ?, ?)";
     private final String ADD_REVIEW = "INSERT INTO reviews (id, name, content, score, authorId, reviewRubric)" +
             "VALUES (?, ?, ?, ?, ?, ?)";
-    private final String GET_RUBRIC = "SELECT * FROM rubrics WHERE rubricName = ?";
+    private final String GET_RUBRIC = "SELECT rubricName, subrubricName FROM rubrics WHERE rubricName = ?";
     private final String INSERT_RUBRIC = "INSERT INTO rubrics (rubricName, subrubricName) VALUES (?, ?)";
     private final String DELETE_RUBRIC = "DELETE FROM rubrics WHERE rubricName = ?";
     private final String ADD_AUTHOR = "INSERT INTO authors (id, name, surname) VALUES (?, ?, ?)";
+    private final String ADD_NEWS_TAG = "INSERT INTO news_tags (newsId, tag) VALUES (?, ?)";
+    private final String ADD_NEWS_LINK = "INSERT INTO news_links (newsId, reviewId) VALUES (?, ?)";
+    private final String ADD_REVIEW_TAG = "INSERT INTO review_tags (reviewId, tag) VALUES (?, ?)";
+    private final String ADD_REVIEW_LINK = "INSERT INTO review_links (reviewId, newsId) VALUES (?, ?)";
 
     private ConnectionDB connectionDB = ConnectionDB.getInstance();
 
@@ -55,6 +54,8 @@ public class DefaultPortalDAO implements PortalDAO {
                 ResultSet rubricsResultSet = categoryPreparedStatement.executeQuery()
         ){
             preparedStatement.executeUpdate();
+            addNewsTags(news);
+            addNewsLinks(news);
             if(!rubricsResultSet.next()) {
                 addRubric(news.getRubric());
             } else {
@@ -62,6 +63,34 @@ public class DefaultPortalDAO implements PortalDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void addNewsTags(News news) {
+        for(NewsTag tag : news.getNewsTags()) {
+            try (
+                    Connection connection = connectionDB.getConnection();
+                    PreparedStatement preparedStatement = Statements.createTagStatement(connection,
+                            ADD_NEWS_TAG, news.getId(), tag.getName())
+            ){
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void addNewsLinks(News news) {
+        for(Review link : news.getLinks()) {
+            try (
+                    Connection connection = connectionDB.getConnection();
+                    PreparedStatement preparedStatement = Statements.createLinkStatement(connection,
+                            ADD_NEWS_LINK, news.getId(), link.getId())
+            ){
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -87,6 +116,34 @@ public class DefaultPortalDAO implements PortalDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void addReviewTags(Review review) {
+        for(ReviewTag tag : review.getReviewTags()) {
+            try (
+                    Connection connection = connectionDB.getConnection();
+                    PreparedStatement preparedStatement = Statements.createTagStatement(connection,
+                            ADD_REVIEW_TAG, review.getId(), tag.getName())
+            ){
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void addReviewLinks(Review review) {
+        for(News link : review.getLinks()) {
+            try (
+                    Connection connection = connectionDB.getConnection();
+                    PreparedStatement preparedStatement = Statements.createLinkStatement(connection,
+                            ADD_REVIEW_LINK, review.getId(), link.getId())
+            ){
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

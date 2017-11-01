@@ -1,9 +1,6 @@
 package lesson4.home.util;
 
-import lesson4.home.entity.Author;
-import lesson4.home.entity.News;
-import lesson4.home.entity.Review;
-import lesson4.home.entity.Rubric;
+import lesson4.home.entity.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -94,6 +91,30 @@ public class Statements {
             preparedStatement.setLong(1, author.getId());
             preparedStatement.setString(2, author.getName());
             preparedStatement.setString(3, author.getSurname());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
+    }
+
+    public static PreparedStatement createTagStatement(Connection connection, String sql, long id, String tagName) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
+            preparedStatement.setString(2, tagName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
+    }
+
+    public static PreparedStatement createLinkStatement(Connection connection, String sql, long id1, long id2) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id1);
+            preparedStatement.setLong(2, id2);
         } catch (SQLException e) {
             e.printStackTrace();
         }
