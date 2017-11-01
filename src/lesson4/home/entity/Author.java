@@ -4,14 +4,24 @@ import java.util.Objects;
 
 public class Author {
 
+    private long id;
     private String name;
     private String surname;
 
     public Author() {}
 
-    public Author(String name, String surname) {
+    public Author(long id, String name, String surname) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -35,13 +45,14 @@ public class Author {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return Objects.equals(name, author.name) &&
+        return id == author.id &&
+                Objects.equals(name, author.name) &&
                 Objects.equals(surname, author.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname);
+        return Objects.hash(id, name, surname);
     }
 
 }

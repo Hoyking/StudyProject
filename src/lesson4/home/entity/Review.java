@@ -6,12 +6,13 @@ import java.util.Objects;
 
 public class Review {
 
+    private long id;
     private String name;
-    private String text;
+    private String content;
     private Rubric rubric;
     private List<ReviewTag> reviewTags;
     private List<News> links;
-    private int score;
+    private double score;
     private Author author;
 
     public Review() {
@@ -19,14 +20,23 @@ public class Review {
         links = new ArrayList<>();
     }
 
-    public Review(String name, String text, Rubric rubric, int score, Author author) {
+    public Review(long id, String name, String content, Rubric rubric, double score, Author author) {
+        this.id = id;
         this.name = name;
-        this.text = text;
+        this.content = content;
         this.rubric = rubric;
         this.score = score;
         this.author = author;
         reviewTags = new ArrayList<>();
         links = new ArrayList<>();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -37,12 +47,12 @@ public class Review {
         this.name = name;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Rubric getRubric() {
@@ -77,11 +87,11 @@ public class Review {
         links.add(news);
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 
@@ -98,16 +108,17 @@ public class Review {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Review review = (Review) o;
-        return score == review.score &&
+        return id == review.id &&
+                score == review.score &&
                 Objects.equals(name, review.name) &&
-                Objects.equals(text, review.text) &&
+                Objects.equals(content, review.content) &&
                 Objects.equals(rubric, review.rubric) &&
                 Objects.equals(author, review.author);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, text, rubric, score, author);
+        return Objects.hash(id, name, content, rubric, score, author);
     }
 
 }

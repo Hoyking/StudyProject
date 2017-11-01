@@ -6,8 +6,9 @@ import java.util.Objects;
 
 public class News {
 
+    private long id;
     private String name;
-    private String text;
+    private String content;
     private Rubric rubric;
     private List<NewsTag> newsTags;
     private List<Review> links;
@@ -17,12 +18,21 @@ public class News {
         links = new ArrayList<>();
     }
 
-    public News(String name, String text, Rubric rubric) {
+    public News(long id, String name, String content, Rubric rubric) {
+        this.id = id;
         this.name = name;
-        this.text = text;
+        this.content = content;
         this.rubric = rubric;
         newsTags = new ArrayList<NewsTag>();
         links = new ArrayList<Review>();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -33,12 +43,12 @@ public class News {
         this.name = name;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Rubric getRubric() {
@@ -78,14 +88,15 @@ public class News {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         News news = (News) o;
-        return Objects.equals(name, news.name) &&
-                Objects.equals(text, news.text) &&
+        return id == news.id &&
+                Objects.equals(name, news.name) &&
+                Objects.equals(content, news.content) &&
                 Objects.equals(rubric, news.rubric);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, text, rubric);
+        return Objects.hash(id, name, content, rubric);
     }
 
 }
