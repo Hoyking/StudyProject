@@ -2,6 +2,7 @@ package lesson4.home.dao;
 
 import lesson4.home.entity.NewsTag;
 import lesson4.home.entity.ReviewTag;
+import lesson4.home.exception.NotSubRubricException;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public interface PortalMethodsDAO {
 
     void removeRubric(String rubricName);
 
-    void replaceReviews(String subrubricName1, String subrubricName2);
+    void replaceNews(String originalRubric, String targetRubric) throws NotSubRubricException;
 
     List<NewsTag> getTagsOfNews(long newsId);
 

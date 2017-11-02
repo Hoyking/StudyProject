@@ -5,6 +5,7 @@ import lesson4.home.dao.DefaultPortalMethodsDAO;
 import lesson4.home.dao.PortalDAO;
 import lesson4.home.dao.PortalMethodsDAO;
 import lesson4.home.entity.*;
+import lesson4.home.exception.NotSubRubricException;
 
 import java.util.List;
 import java.util.Map;
@@ -46,9 +47,19 @@ public class JDBCMain {
         review2.addLink(news3);
         //portalDAO.addReview(review2);
 
+        News news4 = new News(4, "News 4", "Politic news", new Rubric("Rubric 1.2"));
+        news4.addNewsTag(new NewsTag("politics"));
+        //portalDAO.addNews(news4);
+
         //printMap(portalMethodsDAO.newsRubricsCapacity());
         //System.out.println("Number of unlinked reviews: " + portalMethodsDAO.unlinkedReviewsNum());
-        printList(portalMethodsDAO.newsWithMoreThenTwoLinks());
+        //printList(portalMethodsDAO.newsWithMoreThenTwoLinks());
+        /*try {
+            portalMethodsDAO.replaceNews("Rubric 1.2", "Rubric 1.1");
+        } catch (NotSubRubricException e) {
+            e.printStackTrace();
+        }*/
+        printNewsTagList(portalMethodsDAO.getTagsOfNews(2));
     }
 
     private void printMap(Map<String, Integer> map) {
@@ -57,6 +68,10 @@ public class JDBCMain {
 
     private void printList(List<String> list) {
         list.forEach(item -> System.out.println("Item: " + item));
+    }
+
+    private void printNewsTagList(List<NewsTag> list) {
+        list.forEach(item -> System.out.println("Item: " + item.getName()));
     }
 
 }

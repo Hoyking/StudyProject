@@ -3,6 +3,7 @@ package lesson4.home.dao;
 import lesson4.home.connection.ConnectionDB;
 import lesson4.home.entity.NewsTag;
 import lesson4.home.entity.ReviewTag;
+import lesson4.home.exception.NotSubRubricException;
 import lesson4.home.util.Statements;
 
 import java.sql.*;
@@ -19,6 +20,9 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
     private final String GET_REVIEW_LINKS = "SELECT newsId FROM review_links WHERE reviewId = ?";
     private final String GET_NEWS_LINKS = "SELECT reviewId FROM news_links WHERE newsId = ?";
     private final String GET_NEWS = "SELECT * FROM news";
+    private final String GET_SUBRUBRICS = "SELECT subrubricName FROM rubrics WHERE subrubricName = ?";
+    private final String RENAME_NEWS_RUBRIC = "UPDATE news SET newsRubric = ? WHERE newsRubric = ?";
+    private final String GET_NEWS_TAGS = "SELECT tag FROM news_tags WHERE newsId = ?";
 
     private ConnectionDB connectionDB = ConnectionDB.getInstance();
 
@@ -134,13 +138,59 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
     }
 
     @Override
-    public void replaceReviews(String subrubricName1, String subrubricName2) {
+    public void replaceNews(String originalRubric, String targetRubric) throws NotSubRubricException {
+        if(!checkForSubrubric(originalRubric)) {
+            throw new NotSubRubricException("Some rubric is not subrubric");
+        }
+        if(!checkForSubrubric(targetRubric)) {
+            throw new NotSubRubricException("Some rubric is not subrubric");
+        }
 
+        try (
+                Connection connection = connectionDB.getConnection();
+                PreparedStatement preparedStatement = Statements.createRenameRubricStatement(connection,
+                        RENAME_NEWS_RUBRIC, originalRubric, targetRubric)
+        ){
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean checkForSubrubric(String name) {
+        boolean check = false;
+        try (
+                Connection connection = connectionDB.getConnection();
+                PreparedStatement preparedStatement = Statements.createSubrubricStatement(connection,
+                        GET_SUBRUBRICS, name);
+                ResultSet resultSet = preparedStatement.executeQuery()
+        ){
+            if(resultSet.next()) {
+                check = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return check;
     }
 
     @Override
     public List<NewsTag> getTagsOfNews(long newsId) {
-        return null;
+        List<NewsTag> tags = new ArrayList<>();
+        try (
+                Connection connection = connectionDB.getConnection();
+                PreparedStatement preparedStatement = Statements.createNewsTagsStatement(connection,
+                        GET_NEWS_TAGS, newsId);
+                ResultSet resultSet = preparedStatement.executeQuery()
+        ){
+            while (resultSet.next()) {
+                NewsTag newsTag = new NewsTag(resultSet.getString(1));
+                tags.add(newsTag);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tags;
     }
 
     @Override

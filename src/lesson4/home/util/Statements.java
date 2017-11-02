@@ -132,4 +132,38 @@ public class Statements {
         return preparedStatement;
     }
 
+    public static PreparedStatement createSubrubricStatement(Connection connection, String sql, String name) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
+    }
+
+    public static PreparedStatement createRenameRubricStatement(Connection connection, String sql,
+                                                                String originalSubrubric, String targetSubrubric) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, targetSubrubric);
+            preparedStatement.setString(2, originalSubrubric);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
+    }
+
+    public static PreparedStatement createNewsTagsStatement(Connection connection, String sql, long newsId) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, newsId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
+    }
 }
