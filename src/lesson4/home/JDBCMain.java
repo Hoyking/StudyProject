@@ -50,17 +50,21 @@ public class JDBCMain {
         News news4 = new News(4, "News 4", "Politic news", new Rubric("Rubric 1.2"));
         news4.addNewsTag(new NewsTag("politics"));
         //portalDAO.addNews(news4);
+        News news5 = new News(5, "News 4", "Politic news", new Rubric("Rubric 1.2"));
+        news5.addNewsTag(new NewsTag("politics"));
+        news5.addLink(review2);
 
         //printMap(portalMethodsDAO.newsRubricsCapacity());
         //System.out.println("Number of unlinked reviews: " + portalMethodsDAO.unlinkedReviewsNum());
         //printList(portalMethodsDAO.newsWithMoreThenTwoLinks());
+        portalMethodsDAO.removeRubric("Rubric 1");
         /*try {
             portalMethodsDAO.replaceNews("Rubric 1.2", "Rubric 1.1");
         } catch (NotSubRubricException e) {
             e.printStackTrace();
         }*/
         //printNewsTagList(portalMethodsDAO.getTagsOfNews(2));
-        System.out.println("Most famous review tag: " + portalMethodsDAO.getMostFamousTag().getName());
+        //System.out.println("Most famous review tag: " + portalMethodsDAO.getMostFamousTag().getName());
     }
 
     private void printMap(Map<String, Integer> map) {

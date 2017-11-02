@@ -21,11 +21,13 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
     private final String GET_NEWS_LINKS = "SELECT reviewId FROM news_links WHERE newsId = ?";
     private final String GET_NEWS = "SELECT * FROM news";
     private final String GET_SUBRUBRICS = "SELECT subrubricName FROM rubrics WHERE subrubricName = ?";
+    private final String GET_SUBRUBRICS_OF_RUBRIC = "SELECT subrubricName FROM rubrics WHERE rubricName = ?";
     private final String RENAME_NEWS_RUBRIC = "UPDATE news SET newsRubric = ? WHERE newsRubric = ?";
     private final String GET_NEWS_TAGS = "SELECT tag FROM news_tags WHERE newsId = ?";
     private final String GET_REVIEW_TAGS = "SELECT tag FROM reviews_tags";
     private final String GET_MOST_FAMOUS_REVIEW_TAG =
             "SELECT tag, count(*) c FROM reviews_tags GROUP BY tag ORDER BY c DESC LIMIT 1";
+    private final String GET_RUBRIC_NEWS = "SELECT id FROM news WHERE newsRubric = ?";
 
     private ConnectionDB connectionDB = ConnectionDB.getInstance();
 
@@ -137,7 +139,40 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
 
     @Override
     public void removeRubric(String rubricName) {
+        List<String> rubrics = new ArrayList(getSubrubrics(rubricName));
+        rubrics.add(rubricName);
+        for(String rubric : rubrics) {
+            try (
+                    Connection connection = connectionDB.getConnection();
+                    PreparedStatement preparedStatement = Statements.createGeneralStatement(connection,
+                            GET_RUBRIC_NEWS, rubric);
+                    ResultSet resultSet = preparedStatement.executeQuery()
+            ){
+                while (resultSet.next()) {
+                    DefaultPortalDAO.getInstance().removeNews(resultSet.getLong(1));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            DefaultPortalDAO.getInstance().removeRubric(rubric);
+        }
+    }
 
+    private List<String> getSubrubrics(String rubricName) {
+        List<String> subrubrics = new ArrayList<>();
+        try (
+                Connection connection = connectionDB.getConnection();
+                PreparedStatement preparedStatement = Statements.createGeneralStatement(connection,
+                        GET_SUBRUBRICS_OF_RUBRIC, rubricName);
+                ResultSet resultSet = preparedStatement.executeQuery()
+        ){
+            while (resultSet.next()) {
+                subrubrics.add(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return subrubrics;
     }
 
     @Override
@@ -164,7 +199,7 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
         boolean check = false;
         try (
                 Connection connection = connectionDB.getConnection();
-                PreparedStatement preparedStatement = Statements.createSubrubricStatement(connection,
+                PreparedStatement preparedStatement = Statements.createGeneralStatement(connection,
                         GET_SUBRUBRICS, name);
                 ResultSet resultSet = preparedStatement.executeQuery()
         ){

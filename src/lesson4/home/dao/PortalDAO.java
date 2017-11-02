@@ -13,7 +13,7 @@ public interface PortalDAO {
 
     void addNews(News news);
 
-    void removeNews(News news);
+    void removeNews(long id);
 
     void addReview(Review review);
 
@@ -22,6 +22,8 @@ public interface PortalDAO {
     void addRubric(Rubric rubric);
 
     void refreshRubric(Rubric rubric);
+
+    void removeRubric(String name);
 
     void addAuthor(Author author);
 }

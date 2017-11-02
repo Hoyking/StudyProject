@@ -22,6 +22,9 @@ public class DefaultPortalDAO implements PortalDAO {
     private final String ADD_NEWS_LINK = "INSERT INTO news_links (newsId, reviewId) VALUES (?, ?)";
     private final String ADD_REVIEW_TAG = "INSERT INTO reviews_tags (reviewId, tag) VALUES (?, ?)";
     private final String ADD_REVIEW_LINK = "INSERT INTO review_links (reviewId, newsId) VALUES (?, ?)";
+    private final String DELETE_NEWS_TAGS = "DELETE FROM news_tags WHERE newsId = ?";
+    private final String DELETE_NEWS_LINKS = "DELETE FROM news_links WHERE newsId = ?";
+    private final String DELETE_NEWS = "DELETE FROM news WHERE id = ?";
 
     private ConnectionDB connectionDB = ConnectionDB.getInstance();
 
@@ -95,8 +98,42 @@ public class DefaultPortalDAO implements PortalDAO {
     }
 
     @Override
-    public void removeNews(News news) {
+    public void removeNews(long id) {
+        removeNewsTags(id);
+        removeNewsLinks(id);
+        try (
+                Connection connection = connectionDB.getConnection();
+                PreparedStatement preparedStatement = Statements.createLinksStatement(connection,
+                        DELETE_NEWS, id)
+        ){
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void removeNewsTags(long newsId) {
+        try (
+                Connection connection = connectionDB.getConnection();
+                PreparedStatement preparedStatement = Statements.createNewsTagsStatement(connection,
+                        DELETE_NEWS_TAGS, newsId)
+        ){
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeNewsLinks(long newsId) {
+        try (
+                Connection connection = connectionDB.getConnection();
+                PreparedStatement preparedStatement = Statements.createLinksStatement(connection,
+                        DELETE_NEWS_LINKS, newsId)
+        ){
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -183,16 +220,21 @@ public class DefaultPortalDAO implements PortalDAO {
 
     @Override
     public void refreshRubric(Rubric rubric) {
+        removeRubric(rubric.getName());
+        addRubric(rubric);
+    }
+
+    @Override
+    public void removeRubric(String name) {
         try (
                 Connection connection = connectionDB.getConnection();
-                PreparedStatement preparedStatement = Statements.createDelRubricStatement(connection,
-                        DELETE_RUBRIC, rubric)
+                PreparedStatement preparedStatement = Statements.createGeneralStatement(connection,
+                        DELETE_RUBRIC, name)
         ){
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        addRubric(rubric);
     }
 
     @Override

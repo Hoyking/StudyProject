@@ -57,17 +57,6 @@ public class Statements {
         return preparedStatement;
     }
 
-    public static PreparedStatement createDelRubricStatement(Connection connection, String sql, Rubric rubric) {
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, rubric.getName());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return preparedStatement;
-    }
-
     public static PreparedStatement createReviewStatement(Connection connection, String sql, Review review) {
         PreparedStatement preparedStatement = null;
         try {
@@ -121,18 +110,18 @@ public class Statements {
         return preparedStatement;
     }
 
-    public static PreparedStatement createLinksStatement(Connection connection, String sql, long reviewId) {
+    public static PreparedStatement createLinksStatement(Connection connection, String sql, long id) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, reviewId);
+            preparedStatement.setLong(1, id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return preparedStatement;
     }
 
-    public static PreparedStatement createSubrubricStatement(Connection connection, String sql, String name) {
+    public static PreparedStatement createGeneralStatement(Connection connection, String sql, String name) {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -166,4 +155,5 @@ public class Statements {
         }
         return preparedStatement;
     }
+
 }
