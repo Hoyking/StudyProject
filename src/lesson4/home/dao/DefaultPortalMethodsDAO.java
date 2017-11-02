@@ -23,6 +23,9 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
     private final String GET_SUBRUBRICS = "SELECT subrubricName FROM rubrics WHERE subrubricName = ?";
     private final String RENAME_NEWS_RUBRIC = "UPDATE news SET newsRubric = ? WHERE newsRubric = ?";
     private final String GET_NEWS_TAGS = "SELECT tag FROM news_tags WHERE newsId = ?";
+    private final String GET_REVIEW_TAGS = "SELECT tag FROM reviews_tags";
+    private final String GET_MOST_FAMOUS_REVIEW_TAG =
+            "SELECT tag, count(*) c FROM reviews_tags GROUP BY tag ORDER BY c DESC LIMIT 1";
 
     private ConnectionDB connectionDB = ConnectionDB.getInstance();
 
@@ -195,7 +198,19 @@ public class DefaultPortalMethodsDAO implements PortalMethodsDAO {
 
     @Override
     public ReviewTag getMostFamousTag() {
-        return null;
+        ReviewTag tag = null;
+        try (
+                Connection connection = connectionDB.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(GET_MOST_FAMOUS_REVIEW_TAG)
+        ){
+            if(resultSet.next()) {
+                tag = new ReviewTag(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tag;
     }
 
     private static class Holder {

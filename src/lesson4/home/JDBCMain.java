@@ -59,7 +59,8 @@ public class JDBCMain {
         } catch (NotSubRubricException e) {
             e.printStackTrace();
         }*/
-        printNewsTagList(portalMethodsDAO.getTagsOfNews(2));
+        //printNewsTagList(portalMethodsDAO.getTagsOfNews(2));
+        System.out.println("Most famous review tag: " + portalMethodsDAO.getMostFamousTag().getName());
     }
 
     private void printMap(Map<String, Integer> map) {
